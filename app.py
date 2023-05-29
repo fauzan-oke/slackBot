@@ -105,7 +105,7 @@ def handle_events():
                 chatbase_response = send_to_chatbase([chatbase_message])
                 if chatbase_response:
 #                     # Get the response from Chatbase
-                    response_message = chatbase_response["text"]
+                    response_message = chatbase_response
 #                     # Send the response back to the user in a reply thread
                     send_message(channel_id, response_message, thread_ts=event["ts"])
                 else:
