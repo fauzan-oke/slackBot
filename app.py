@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from slack_sdk import WebClient
 from slack_sdk.signature import SignatureVerifier
 from flask import Flask, request
+from gradio_client import Client
 
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
@@ -36,24 +37,31 @@ def send_message(channel, message, thread_ts=None):
         print("Error sending message to Slack:", e)        
 
 def send_to_chatbase(messages):
-    url = "https://www.chatbase.co/api/v1/chat"
-    headers = {
-        "Authorization": f"Bearer {chatbase_secret}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "messages": messages,
-        "chatId": chat_id,
-        "stream": False,
-        "temperature": 0
-    }
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print("Error sending message to Chatbase:", e)
-    return None
+    client = Client("https://d6badaabdbb8884f6e.gradio.live/")
+    result = client.predict(
+				messages,	# str representing input in 'Enter your text' Textbox component
+				api_name="/predict"
+    )
+    # print(result)
+    return result
+    # url = "https://www.chatbase.co/api/v1/chat"
+    # headers = {
+    #     "Authorization": f"Bearer {chatbase_secret}",
+    #     "Content-Type": "application/json"
+    # }
+    # payload = {
+    #     "messages": messages,
+    #     "chatId": chat_id,
+    #     "stream": False,
+    #     "temperature": 0
+    # }
+    # try:
+    #     response = requests.post(url, headers=headers, json=payload)
+    #     response.raise_for_status()
+    #     return response.json()
+    # except requests.exceptions.RequestException as e:
+    #     print("Error sending message to Chatbase:", e)
+    # return None
 
 @app.route("/slack/events", methods=["POST"])
 def handle_events():
