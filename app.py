@@ -37,7 +37,7 @@ def send_message(channel, message, thread_ts=None):
         print("Error sending message to Slack:", e)        
 
 def send_to_chatbase(messages):
-    client = Client("https://c752aa13389f89c3d9.gradio.live")
+    client = Client("https://7f967d23def7994155.gradio.live")
     result = client.predict(
 				messages,	# str representing input in 'Enter your text' Textbox component
 				api_name="/predict"
