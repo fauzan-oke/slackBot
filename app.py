@@ -98,9 +98,9 @@ def handle_events():
         return challenge
     
     # Verify the request signature
-    request_body = request.get_data(as_text=True)
-    timestamp = request.headers.get("X-Slack-Request-Timestamp")
-    signature = request.headers.get("X-Slack-Signature")
+    # request_body = request.get_data(as_text=True)
+    # timestamp = request.headers.get("X-Slack-Request-Timestamp")
+    # signature = request.headers.get("X-Slack-Signature")
     # if not verifier.is_valid_request(request_body, timestamp, signature):
         # return "Invalid request signature", 403
 
@@ -137,4 +137,4 @@ def handle_events():
     return "Event handled"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=8080)
