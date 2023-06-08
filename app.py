@@ -41,7 +41,7 @@ def read_chatbot_reply(messages):
             'messages': messages,
             'chatId': chat_id,
             'stream': True,
-            'temperature': 0
+            'temperature': 0.7
         }
         
         response = requests.post(api_url, json=data, headers=headers, stream=True)
