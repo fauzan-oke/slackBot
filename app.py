@@ -41,7 +41,7 @@ def read_chatbot_reply(messages):
             'messages': messages,
             'chatId': chat_id,
             'stream': True,
-            'temperature': 0.3
+            'temperature': 0.4
         }
         
         response = requests.post(api_url, json=data, headers=headers, stream=True)
@@ -76,7 +76,7 @@ def send_to_chatbase(messages):
         "messages": messages,
         "chatId": chat_id,
         "stream": False,
-        "temperature": 0.3
+        "temperature": 0.4
     }
     try:
         response = requests.post(url, headers=headers, json=payload)
