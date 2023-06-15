@@ -41,7 +41,7 @@ def read_chatbot_reply(messages):
             'messages': messages,
             'chatId': chat_id,
             'stream': True,
-            'temperature': 0.7
+            'temperature': 0.3
         }
         
         response = requests.post(api_url, json=data, headers=headers, stream=True)
@@ -76,7 +76,7 @@ def send_to_chatbase(messages):
         "messages": messages,
         "chatId": chat_id,
         "stream": False,
-        "temperature": 0.7
+        "temperature": 0.3
     }
     try:
         response = requests.post(url, headers=headers, json=payload)
@@ -119,20 +119,41 @@ def handle_events():
             channel_id = event["channel"]
             user_id = event["user"]
             text = event["text"]
-            if BOT_ID != user_id:
+            
+            if BOT_ID in text:
+                if BOT_ID != user_id:
                 # Send message to Chatbase
-                chatbase_message = {
-                    "content": text,
+                    updated_text = text.replace("D058UB7KG8Y", "")
+                    chatbase_message = {
+                    "content": updated_text,
                     "role": "user"
-                }
-                chatbase_response = read_chatbot_reply([chatbase_message])
-                if chatbase_response:
+                    }
+                    chatbase_response = read_chatbot_reply([chatbase_message])
+                    if chatbase_response:
 #                     # Get the response from Chatbase
-                    response_message = chatbase_response
+                        response_message = chatbase_response
 #                     # Send the response back to the user in a reply thread
-                    send_message(channel_id, response_message, thread_ts=event["ts"])
-                else:
-                    send_message(channel_id, "Error processing the message.",thread_ts=event["ts"])
+                        send_message(channel_id, response_message, thread_ts=event["ts"])
+                    else:
+                        send_message(channel_id, "Error processing the message.",thread_ts=event["ts"])
+            elif channel_id == "D058UB7KG8Y":
+                if BOT_ID != user_id:
+                # Send message to Chatbase
+                    updated_text = text.replace("D058UB7KG8Y", "")
+                    chatbase_message = {
+                    "content": updated_text,
+                    "role": "user"
+                    }
+                    chatbase_response = read_chatbot_reply([chatbase_message])
+                    if chatbase_response:
+#                     # Get the response from Chatbase
+                        response_message = chatbase_response
+#                     # Send the response back to the user in a reply thread
+                        send_message(channel_id, response_message, thread_ts=event["ts"])
+                    else:
+                        send_message(channel_id, "Error processing the message.",thread_ts=event["ts"])
+
+
     
     return "Event handled"
 
