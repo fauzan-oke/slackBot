@@ -123,7 +123,7 @@ def handle_events():
             if BOT_ID in text:
                 if BOT_ID != user_id:
                 # Send message to Chatbase
-                    updated_text = text.replace("D058UB7KG8Y", "")
+                    updated_text = text.replace("D05CM3KB7K5", "")
                     chatbase_message = {
                     "content": updated_text,
                     "role": "user"
@@ -136,10 +136,10 @@ def handle_events():
                         send_message(channel_id, response_message, thread_ts=event["ts"])
                     else:
                         send_message(channel_id, "Error processing the message.",thread_ts=event["ts"])
-            elif channel_id == "D058UB7KG8Y":
+            elif channel_id == "D05CM3KB7K5":
                 if BOT_ID != user_id:
                 # Send message to Chatbase
-                    updated_text = text.replace("D058UB7KG8Y", "")
+                    updated_text = text.replace("D05CM3KB7K5", "")
                     chatbase_message = {
                     "content": updated_text,
                     "role": "user"
